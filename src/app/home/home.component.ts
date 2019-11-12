@@ -13,7 +13,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.apiService.get().subscribe((data: any[]) => {
+    this.apiService.sendGetRequest().subscribe((data: any[]) => {
       console.log(data);
       this.products = data;
     });
