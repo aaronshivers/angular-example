@@ -8,7 +8,7 @@ import { catchError } from 'rxjs/operators';
 })
 export class ApiService {
 
-  private SERVER_URL = 'http://localhost:3000';
+  private SERVER_URL = 'http://localhost:3000/products';
 
   constructor(private httpClient: HttpClient) {
   }
