@@ -27,34 +27,15 @@ export class HomeComponent implements OnInit {
       });
   }
 
-  ngOnDestroy() {
-    this.destroy$.next(true);
-    this.destroy$.unsubscribe();
-  }
-
   public firstPage() {
     this.products = [];
-    this
-      .apiService
+    this.apiService
       .sendGetRequestToUrl(this.apiService.first)
-      .pipe(takeUntil(this.destroy$)).subscribe((res: HttpResponse<any>) => {
-      console.log(res);
-      this.products = res.body;
-    });
-  }
-
-  public previousPage() {
-    if (this.apiService.prev !== undefined && this.apiService.prev !== '') {
-      this.products = [];
-      this
-        .apiService
-        .sendGetRequestToUrl(this.apiService.prev)
-        .pipe(takeUntil(this.destroy$))
-        .subscribe((res: HttpResponse<any>) => {
-          console.log(res);
-          this.products = res.body;
-        });
-    }
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((res: HttpResponse<any>) => {
+        console.log(res);
+        this.products = res.body;
+      });
   }
 
   public nextPage() {
@@ -71,15 +52,31 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  public previousPage() {
+    if (this.apiService.prev !== undefined && this.apiService.prev !== '') {
+      this.products = [];
+      this
+        .apiService
+        .sendGetRequestToUrl(this.apiService.prev)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((res: HttpResponse<any>) => {
+          console.log(res);
+          this.products = res.body;
+        });
+    }
+  }
+
   public lastPage() {
-    this.products = [];
-    this
-      .apiService
-      .sendGetRequestToUrl(this.apiService.last)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((res: HttpResponse<any>) => {
-        console.log(res);
-        this.products = res.body;
-      });
+    if (this.apiService.last !== undefined && this.apiService.last !== '') {
+      this.products = [];
+      this
+        .apiService
+        .sendGetRequestToUrl(this.apiService.last)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((res: HttpResponse<any>) => {
+          console.log(res);
+          this.products = res.body;
+        });
+    }
   }
 }

@@ -34,23 +34,21 @@ export class ApiService {
   public sendGetRequest() {
     return this
       .httpClient
-      .get(this.SERVER_URL, { params: new HttpParams({ fromString: '_page=1&_limit=20' }), observe: 'response' })
+      .get(this.SERVER_URL, { params: new HttpParams({ fromString: '_page=1&_limit=2' }), observe: 'response' })
       .pipe(retry(3), catchError(this.handleError), tap(res => {
         this.parseLinkHeader(res.headers.get('Link'));
       }));
   }
 
   public sendGetRequestToUrl(url: string) {
-    return this
-      .httpClient
-      .get(url, { observe: 'response' })
-      .pipe(retry(3)),
-      catchError(this.handleError),
-      tap(res => {
+    return this.httpClient.get(url, { observe: 'response' }).pipe(retry(3),
+      catchError(this.handleError), tap(res => {
         console.log(res.headers.get('Link'));
         this.parseLinkHeader(res.headers.get('Link'));
-      });
+      }),
+    );
   }
+
 
   parseLinkHeader(header) {
     if (header.length === 0) {
@@ -73,5 +71,7 @@ export class ApiService {
     this.last = links.last;
     this.prev = links.prev;
     this.next = links.next;
+
+    console.log('first: ' + this.first, 'last: ' + this.last);
   }
 }
