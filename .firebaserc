@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "angular-example-16fe3": {
+      "hosting": {
+        "angular-example": [
+          "angular-example-16fe3"
+        ]
+      }
+    }
+  }
+}
